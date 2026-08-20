@@ -1,0 +1,188 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Tactical Design Tokens */
+  --px-void: #0A0C10;
+  --px-panel: #12151C;
+  --px-panel-raised: #171B24;
+  --px-line: #262B38;
+  --px-text: #E7EAF0;
+  --px-text-muted: #8B93A7;
+  --px-text-faint: #565E70;
+  
+  /* Signal System Colors */
+  --px-signal: #4C8DFF;        /* Blue: neutral/in-system/brand */
+  --px-signal-light: #7DB0FF;  /* Light Blue: secondary tier */
+  --px-amber: #F2A93B;         /* Amber: needs attention / interview */
+  --px-green: #34D399;         /* Green: success / offer / verified */
+  --px-red: #F0555A;           /* Red: critical / rejected */
+
+  /* Legacy Fallbacks mapping to Tactical System */
+  --primary: 217 100% 65%;
+  --primary-fg: 0 0% 100%;
+  --background: 220 23% 5%;
+  --foreground: 220 20% 93%;
+  --card: 220 22% 9%;
+  --card-foreground: 220 20% 93%;
+  --border: 220 19% 18%;
+  --muted: 220 20% 12%;
+  --muted-foreground: 220 14% 60%;
+  
+  /* Typography */
+  --font-display: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+  --font-sans: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+  --font-mono: 'IBM Plex Mono', 'Menlo', 'Monaco', monospace;
+
+  /* Strict tactical radius: 0-2px max */
+  --radius-sm: 0px;
+  --radius: 2px;
+  --radius-md: 2px;
+  --radius-lg: 2px;
+  --radius-xl: 2px;
+}
+
+@layer base {
+  * {
+    border-color: var(--px-line);
+  }
+
+  body {
+    background-color: var(--px-void);
+    color: var(--px-text);
+    font-family: var(--font-sans);
+    letter-spacing: -0.01em;
+    overflow-wrap: break-word;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+  }
+
+  code, pre, .font-mono {
+    font-family: var(--font-mono);
+  }
+
+  /* Tactical Grid Background */
+  .px-grid-bg {
+    background-image: 
+      linear-gradient(to right, rgba(38, 43, 56, 0.25) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(38, 43, 56, 0.25) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+
+  /* Custom Tactical Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #0A0C10;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #262B38;
+    border-radius: 0px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #4C8DFF;
+  }
+
+  /* Reduced Motion */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      transition-property: none !important;
+      animation-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  /* Tactical Panel Frame with Corner Brackets */
+  .px-panel {
+    background-color: var(--px-panel);
+    border: 1px solid var(--px-line);
+    position: relative;
+    border-radius: 2px;
+  }
+
+  .px-panel-raised {
+    background-color: var(--px-panel-raised);
+    border: 1px solid var(--px-line);
+    position: relative;
+    border-radius: 2px;
+  }
+
+  /* Bracket Corners Signature Styling */
+  .px-bracket-corners {
+    position: relative;
+  }
+
+  .px-bracket-corners::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    width: 6px;
+    height: 6px;
+    border-top: 2px solid var(--px-signal);
+    border-left: 2px solid var(--px-signal);
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .px-bracket-corners::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    right: -1px;
+    width: 6px;
+    height: 6px;
+    border-bottom: 2px solid var(--px-signal);
+    border-right: 2px solid var(--px-signal);
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  /* Status Badges */
+  .px-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.125rem 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: 2px;
+    border: 1px solid transparent;
+  }
+
+  /* Live Pulse Indicator */
+  .px-pulse-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    position: relative;
+  }
+
+  .px-pulse-dot::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: 50%;
+    background-color: inherit;
+    opacity: 0.75;
+    animation: px-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  @keyframes px-pulse {
+    0%, 100% { opacity: 0.75; transform: scale(1); }
+    50% { opacity: 0.2; transform: scale(1.6); }
+  }
+}
