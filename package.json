@@ -4,6 +4,7 @@
   "description": "PlaceX Campus Placement System Root",
   "scripts": {
     "build": "cd backend && npm install",
-    "start": "cd backend && npm start"
+    "start": "cd backend && npm start",
+    "postinstall": "cd backend && npm install"
   }
 }
