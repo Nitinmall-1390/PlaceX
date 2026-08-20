@@ -40,11 +40,20 @@ const allowedOrigins = [
 
 app.use(cors({
   origin: (origin, callback) => {
-    if (!origin || allowedOrigins.includes(origin) || process.env.NODE_ENV !== 'production') {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
+    // Allow server-to-server / curl / Postman without origin
+    if (!origin) return callback(null, true);
+
+    // Allow all Vercel deployment domains (*.vercel.app)
+    if (origin.endsWith('.vercel.app') || origin === 'https://vercel.app') {
+      return callback(null, true);
     }
+
+    // Allow exact matches from allowedOrigins or localhost
+    if (allowedOrigins.includes(origin) || origin.includes('localhost') || process.env.NODE_ENV !== 'production') {
+      return callback(null, true);
+    }
+
+    return callback(new Error(`CORS blocked for origin: ${origin}`));
   },
   credentials: true,
 }));
