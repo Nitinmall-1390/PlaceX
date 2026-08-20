@@ -1,6 +1,14 @@
 import mongoose from 'mongoose';
+import dns from 'dns';
 import { config } from './env.js';
 import { logger } from './logger.js';
+
+// Configure resilient DNS resolution for MongoDB Atlas SRV records
+try {
+  dns.setServers(['8.8.8.8', '1.1.1.1', '8.8.4.4']);
+} catch {
+  // Ignore if custom DNS cannot be set
+}
 
 export async function connectDatabase() {
   const uri = process.env.MONGODB_URI;
@@ -14,7 +22,7 @@ export async function connectDatabase() {
     logger.info('[Database] Connecting to MongoDB...');
 
     await mongoose.connect(uri, {
-      serverSelectionTimeoutMS: 10000,
+      serverSelectionTimeoutMS: 15000,
     });
 
     logger.info('[Database] Connected to MongoDB successfully.');
