@@ -13,7 +13,17 @@ class SocketService {
     const token = getStorage(STORAGE_KEYS.ACCESS_TOKEN);
     if (!token) return;
 
-    const socketUrl = import.meta.env.VITE_SOCKET_URL || 'http://localhost:5000';
+    const getSocketUrl = (): string => {
+      if (import.meta.env.VITE_SOCKET_URL) {
+        return import.meta.env.VITE_SOCKET_URL;
+      }
+      if (typeof window !== 'undefined' && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+        return 'https://placex-backend-3fmj.onrender.com';
+      }
+      return 'http://localhost:5000';
+    };
+
+    const socketUrl = getSocketUrl();
 
     this.socket = io(socketUrl, {
       transports: ['websocket'],

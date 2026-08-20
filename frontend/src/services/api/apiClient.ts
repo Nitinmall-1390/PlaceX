@@ -3,7 +3,17 @@ import type { ApiResponse, ApiError as ApiErrorResponse, ValidationError } from 
 import { getStorage, removeStorage, setStorage } from './storage';
 import { STORAGE_KEYS } from '../../constants';
 
-const baseURL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api/v1';
+const getApiBaseUrl = (): string => {
+  if (import.meta.env.VITE_API_BASE_URL) {
+    return import.meta.env.VITE_API_BASE_URL;
+  }
+  if (typeof window !== 'undefined' && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+    return 'https://placex-backend-3fmj.onrender.com/api/v1';
+  }
+  return 'http://localhost:5000/api/v1';
+};
+
+const baseURL = getApiBaseUrl();
 
 let isRefreshing = false;
 let failedQueue: Array<{
