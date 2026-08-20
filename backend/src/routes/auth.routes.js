@@ -20,7 +20,7 @@ export const register = asyncHandler(async (req, res) => {
   res.cookie('placex_rt', result.refreshToken, {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
-    sameSite: 'strict',
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
     maxAge: 7 * 24 * 60 * 60 * 1000,
     path: '/api/v1/auth/refresh'
   });
@@ -28,6 +28,7 @@ export const register = asyncHandler(async (req, res) => {
   ApiResponse.created(res, 'Registration successful', {
     user: result.user,
     accessToken: result.accessToken,
+    refreshToken: result.refreshToken,
   });
 });
 
@@ -43,7 +44,7 @@ export const login = asyncHandler(async (req, res) => {
   res.cookie('placex_rt', result.refreshToken, {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
-    sameSite: 'strict',
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
     maxAge: 7 * 24 * 60 * 60 * 1000,
     path: '/api/v1/auth/refresh'
   });
@@ -51,6 +52,7 @@ export const login = asyncHandler(async (req, res) => {
   ApiResponse.ok(res, 'Login successful', {
     user: result.user,
     accessToken: result.accessToken,
+    refreshToken: result.refreshToken,
   });
 });
 
@@ -132,7 +134,7 @@ export const google = asyncHandler(async (req, res) => {
   res.cookie('placex_rt', result.refreshToken, {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
-    sameSite: 'strict',
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
     maxAge: 7 * 24 * 60 * 60 * 1000,
     path: '/api/v1/auth/refresh',
   });
@@ -140,6 +142,7 @@ export const google = asyncHandler(async (req, res) => {
   ApiResponse.ok(res, 'Google login successful', {
     user: result.user,
     accessToken: result.accessToken,
+    refreshToken: result.refreshToken,
   });
 });
 
@@ -151,7 +154,7 @@ export const phone = asyncHandler(async (req, res) => {
   res.cookie('placex_rt', result.refreshToken, {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
-    sameSite: 'strict',
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
     maxAge: 7 * 24 * 60 * 60 * 1000,
     path: '/api/v1/auth/refresh',
   });
@@ -159,6 +162,7 @@ export const phone = asyncHandler(async (req, res) => {
   ApiResponse.ok(res, 'Phone login successful', {
     user: result.user,
     accessToken: result.accessToken,
+    refreshToken: result.refreshToken,
   });
 });
 
