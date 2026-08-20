@@ -27,36 +27,23 @@ import { ApiResponse } from './utils/ApiResponse.js';
 
 const app = express();
 
-// Security headers
-app.use(helmet());
+// Security headers configured for cross-origin API and OAuth popups
+app.use(
+  helmet({
+    crossOriginResourcePolicy: { policy: 'cross-origin' },
+    crossOriginOpenerPolicy: { policy: 'same-origin-allow-popups' },
+  })
+);
 
-// Enable CORS
-const allowedOrigins = [
-  'http://localhost:5173',
-  'http://localhost:5174',
-  'http://localhost:3000',
-  process.env.CLIENT_URL,
-].filter(Boolean);
-
-app.use(cors({
-  origin: (origin, callback) => {
-    // Allow server-to-server / curl / Postman without origin
-    if (!origin) return callback(null, true);
-
-    // Allow all Vercel deployment domains (*.vercel.app)
-    if (origin.endsWith('.vercel.app') || origin === 'https://vercel.app') {
-      return callback(null, true);
-    }
-
-    // Allow exact matches from allowedOrigins or localhost
-    if (allowedOrigins.includes(origin) || origin.includes('localhost') || process.env.NODE_ENV !== 'production') {
-      return callback(null, true);
-    }
-
-    return callback(new Error(`CORS blocked for origin: ${origin}`));
-  },
-  credentials: true,
-}));
+// Enable CORS with origin reflection for all client apps
+app.use(
+  cors({
+    origin: true,
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
+  })
+);
 
 // Parse JSON requests
 app.use(express.json({ limit: '10mb' }));
