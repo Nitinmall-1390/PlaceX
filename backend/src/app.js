@@ -27,6 +27,9 @@ import { ApiResponse } from './utils/ApiResponse.js';
 
 const app = express();
 
+// Trust reverse proxies (Render, Cloudflare, etc.)
+app.set('trust proxy', 1);
+
 // Security headers configured for cross-origin API and OAuth popups
 app.use(
   helmet({
@@ -40,7 +43,7 @@ app.use(
   cors({
     origin: true,
     credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS', 'HEAD'],
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
   })
 );
@@ -49,9 +52,9 @@ app.use(
 app.use(express.json({ limit: '10mb' }));
 
 // Parse URL-encoded requests
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
-// Cookie parser (for refresh token cookie)
+// Parse cookies
 app.use(cookieParser());
 
 // Request ID middleware
@@ -59,11 +62,12 @@ app.use(requestIdMiddleware);
 
 // Rate limiting
 const apiLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 200, // limit each IP to 200 requests per window
+  windowMs: 15 * 60 * 1000,
+  max: 500,
   message: 'Too many requests from this IP, please try again later.',
   standardHeaders: true,
   legacyHeaders: false,
+  validate: { xForwardedForHeader: false },
 });
 
 app.use('/api/', apiLimiter);
@@ -89,8 +93,8 @@ const rootWelcome = (req, res) => {
 app.get('/', rootWelcome);
 app.get('/api/v1', rootWelcome);
 
-// Health check endpoint
-app.get('/health', healthCheck);
+// Health check endpoint (supports GET, HEAD for uptime monitoring)
+app.all('/health', healthCheck);
 app.use('/api/v1', healthRoutes);
 
 // API routes

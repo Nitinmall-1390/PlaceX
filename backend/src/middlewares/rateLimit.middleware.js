@@ -9,6 +9,7 @@ const createLimiter = (options) => {
     ...options,
     standardHeaders: true,
     legacyHeaders: false,
+    validate: { xForwardedForHeader: false },
   });
   return limiter;
 };
