@@ -1,0 +1,9 @@
+{
+  "name": "placex-root",
+  "version": "1.0.0",
+  "description": "PlaceX Campus Placement System Root",
+  "scripts": {
+    "build": "cd backend && npm install",
+    "start": "cd backend && npm start"
+  }
+}
