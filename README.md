@@ -3,16 +3,18 @@
 # 🎓 PlaceX — Placement Operating System
 ### Enterprise-Grade Campus Recruitment Automation and Career Intelligence Platform
 
-[![Build Status](https://img.shields.io/badge/Frontend_Build-Passing_(tsc_v6)-00C853?style=for-the-badge&logo=typescript&logoColor=white)](https://github.com/Nitinmall-1390/PlaceX)
+[![Frontend Web App](https://img.shields.io/badge/Frontend_Web_App-Live_on_Vercel-black?style=for-the-badge&logo=vercel&logoColor=white)](https://placex.vercel.app)
 [![API Status](https://img.shields.io/badge/Backend_API-Live_on_Render-4C8DFF?style=for-the-badge&logo=render&logoColor=white)](https://placex-backend-3fmj.onrender.com/health)
 [![API Docs](https://img.shields.io/badge/Swagger_OpenAPI-3.0_Interactive-85EA2D?style=for-the-badge&logo=swagger&logoColor=black)](https://placex-backend-3fmj.onrender.com/api-docs)
+[![Build Status](https://img.shields.io/badge/Frontend_Build-Passing_(tsc_v6)-00C853?style=for-the-badge&logo=typescript&logoColor=white)](https://github.com/Nitinmall-1390/PlaceX)
 [![License](https://img.shields.io/badge/License-MIT-white?style=for-the-badge)](LICENSE)
 
 <p align="center">
-  <a href="https://placex-backend-3fmj.onrender.com/api/v1"><strong>Explore Live API »</strong></a> •
-  <a href="https://placex-backend-3fmj.onrender.com/api-docs"><strong>Swagger Docs »</strong></a> •
-  <a href="#-quickstart--local-setup"><strong>Run Locally »</strong></a> •
-  <a href="#-system-architecture"><strong>Architecture »</strong></a>
+  <a href="https://placex.vercel.app"><strong>🚀 Live Web App (Vercel) »</strong></a> •
+  <a href="https://placex-backend-3fmj.onrender.com/api/v1"><strong>Explore REST API »</strong></a> •
+  <a href="https://placex-backend-3fmj.onrender.com/api-docs"><strong>Swagger OpenAPI Docs »</strong></a> •
+  <a href="https://placex-backend-3fmj.onrender.com/health"><strong>Health Telemetry »</strong></a> •
+  <a href="#-quickstart--local-setup"><strong>Run Locally »</strong></a>
 </p>
 
 </div>
@@ -21,6 +23,7 @@
 
 ## 📌 Table of Contents
 
+- [Live Deployments & Cloud Endpoints](#-live-deployments--cloud-endpoints)
 - [Overview](#-overview)
 - [The Problem & The Solution](#-the-problem--the-solution)
 - [Multi-Stakeholder Feature Matrix](#-multi-stakeholder-feature-matrix)
@@ -42,6 +45,25 @@
 - [Testing & Validation](#-testing--validation)
 - [Roadmap](#-roadmap)
 - [License](#-license)
+
+---
+
+## 🌐 Live Deployments & Cloud Endpoints
+
+The complete PlaceX ecosystem is deployed across production cloud infrastructure:
+
+| Component / Layer | Platform | Live URL / Endpoint | Verification & Status |
+| :--- | :--- | :--- | :---: |
+| **Frontend Web Application** | **Vercel** | [https://placex.vercel.app](https://placex.vercel.app) | 🟢 `Active (SPA)` |
+| **Production REST API v1** | **Render** | [https://placex-backend-3fmj.onrender.com/api/v1](https://placex-backend-3fmj.onrender.com/api/v1) | 🟢 `HTTP 200 OK` |
+| **Interactive API Documentation** | **Swagger** | [https://placex-backend-3fmj.onrender.com/api-docs](https://placex-backend-3fmj.onrender.com/api-docs) | 🟢 `OpenAPI 3.0` |
+| **System Health & Uptime Check** | **Render** | [https://placex-backend-3fmj.onrender.com/health](https://placex-backend-3fmj.onrender.com/health) | 🟢 `Operational` |
+| **Real-Time Notification Socket** | **Socket.IO** | `wss://placex-backend-3fmj.onrender.com` | 🟢 `Streaming` |
+| **Source Code Repository** | **GitHub** | [https://github.com/Nitinmall-1390/PlaceX](https://github.com/Nitinmall-1390/PlaceX) | 🟢 `v1.0.0` |
+| **Identity & Phone Verification** | **Firebase** | [https://placex-658b5.firebaseapp.com](https://placex-658b5.firebaseapp.com) | 🟢 `Active` |
+| **Database Cluster** | **MongoDB Atlas** | `mongodb+srv://cluster0.eohycca.mongodb.net/placex` | 🟢 `SRV ReplicaSet` |
+
+> ⏱️ **Cold Start Notice**: Render free instances enter standby after inactivity. If making the first request after an idle window, please allow 30–50 seconds for the backend instance to spin up.
 
 ---
 
