@@ -3,14 +3,14 @@
 # 🎓 PlaceX — Placement Operating System
 ### Enterprise-Grade Campus Recruitment Automation and Career Intelligence Platform
 
-[![Frontend Web App](https://img.shields.io/badge/Frontend_Web_App-Live_on_Vercel-black?style=for-the-badge&logo=vercel&logoColor=white)](https://placex.vercel.app)
+[![Frontend Web App](https://img.shields.io/badge/Frontend_Web_App-Live_on_Vercel-black?style=for-the-badge&logo=vercel&logoColor=white)](https://place-l9wmiaqm1-nitinmall-1390s-projects.vercel.app/auth/login)
 [![API Status](https://img.shields.io/badge/Backend_API-Live_on_Render-4C8DFF?style=for-the-badge&logo=render&logoColor=white)](https://placex-backend-3fmj.onrender.com/health)
 [![API Docs](https://img.shields.io/badge/Swagger_OpenAPI-3.0_Interactive-85EA2D?style=for-the-badge&logo=swagger&logoColor=black)](https://placex-backend-3fmj.onrender.com/api-docs)
 [![Build Status](https://img.shields.io/badge/Frontend_Build-Passing_(tsc_v6)-00C853?style=for-the-badge&logo=typescript&logoColor=white)](https://github.com/Nitinmall-1390/PlaceX)
 [![License](https://img.shields.io/badge/License-MIT-white?style=for-the-badge)](LICENSE)
 
 <p align="center">
-  <a href="https://placex.vercel.app"><strong>🚀 Live Web App (Vercel) »</strong></a> •
+  <a href="https://place-l9wmiaqm1-nitinmall-1390s-projects.vercel.app/auth/login"><strong>🚀 Live Web App (Vercel) »</strong></a> •
   <a href="https://placex-backend-3fmj.onrender.com/api/v1"><strong>Explore REST API »</strong></a> •
   <a href="https://placex-backend-3fmj.onrender.com/api-docs"><strong>Swagger OpenAPI Docs »</strong></a> •
   <a href="https://placex-backend-3fmj.onrender.com/health"><strong>Health Telemetry »</strong></a> •
@@ -54,7 +54,7 @@ The complete PlaceX ecosystem is deployed across production cloud infrastructure
 
 | Component / Layer | Platform | Live URL / Endpoint | Verification & Status |
 | :--- | :--- | :--- | :---: |
-| **Frontend Web Application** | **Vercel** | [https://placex.vercel.app](https://placex.vercel.app) | 🟢 `Active (SPA)` |
+| **Frontend Web Application** | **Vercel** | [place-l9wmiaqm1-nitinmall-1390s-projects.vercel.app](https://place-l9wmiaqm1-nitinmall-1390s-projects.vercel.app/auth/login) | 🟢 `Active (SPA)` |
 | **Production REST API v1** | **Render** | [https://placex-backend-3fmj.onrender.com/api/v1](https://placex-backend-3fmj.onrender.com/api/v1) | 🟢 `HTTP 200 OK` |
 | **Interactive API Documentation** | **Swagger** | [https://placex-backend-3fmj.onrender.com/api-docs](https://placex-backend-3fmj.onrender.com/api-docs) | 🟢 `OpenAPI 3.0` |
 | **System Health & Uptime Check** | **Render** | [https://placex-backend-3fmj.onrender.com/health](https://placex-backend-3fmj.onrender.com/health) | 🟢 `Operational` |
