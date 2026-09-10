@@ -1,4 +1,12 @@
 import mongoose from 'mongoose';
+import dns from 'dns';
+import dotenv from 'dotenv';
+dotenv.config();
+
+try {
+  dns.setServers(['8.8.8.8', '1.1.1.1']);
+} catch {}
+
 import { User } from './src/models/User.js';
 import { Student } from './src/models/Student.js';
 import { RefreshToken } from './src/models/RefreshToken.js';

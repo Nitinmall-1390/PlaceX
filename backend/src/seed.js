@@ -307,7 +307,7 @@ async function seed() {
     mimeType: 'application/pdf',
     size: 245000,
     version: 3,
-    isPrimary: true,
+    isPrimary: false,
     atsScore: 91,
   });
 
@@ -352,7 +352,7 @@ async function seed() {
   for (let i = 0; i < 22; i++) {
     await Notification.create({
       recipient: demoStudentUser._id,
-      type: i % 2 === 0 ? 'SHORTLISTED' : 'INTERVIEW_SCHEDULED',
+      type: i % 2 === 0 ? 'APPLICATION_SHORTLISTED' : 'INTERVIEW_SCHEDULED',
       title: i % 2 === 0 ? 'Application Shortlisted' : 'Interview Scheduled',
       message: i % 2 === 0 ? 'Congratulations! TechNova Solutions has shortlisted your profile for the next round.' : 'Your technical interview with FinEdge Systems has been scheduled for tomorrow at 10:00 AM.',
       isRead: i < 5,

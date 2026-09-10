@@ -23,6 +23,8 @@ import atsRoutes from './routes/ats.routes.js';
 import assessmentRoutes from './routes/assessment.routes.js';
 import tpoRoutes from './routes/tpo.routes.js';
 import intelligenceRoutes from './routes/intelligence.routes.js';
+import swaggerUi from 'swagger-ui-express';
+import { swaggerSpec } from './config/swagger.js';
 import { ApiResponse } from './utils/ApiResponse.js';
 
 const app = express();
@@ -35,6 +37,7 @@ app.use(
   helmet({
     crossOriginResourcePolicy: { policy: 'cross-origin' },
     crossOriginOpenerPolicy: { policy: 'same-origin-allow-popups' },
+    contentSecurityPolicy: false,
   })
 );
 
@@ -84,6 +87,7 @@ const rootWelcome = (req, res) => {
     endpoints: {
       health: '/health',
       apiHealth: '/api/v1/health',
+      docs: '/api-docs',
       auth: '/api/v1/auth',
     },
     timestamp: new Date().toISOString(),
@@ -92,6 +96,23 @@ const rootWelcome = (req, res) => {
 
 app.get('/', rootWelcome);
 app.get('/api/v1', rootWelcome);
+
+// Swagger API documentation
+const swaggerUiOptions = {
+  customSiteTitle: 'PlaceX API Documentation',
+  customCss: '.swagger-ui .topbar { display: none }',
+};
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, swaggerUiOptions));
+app.use('/api/v1/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, swaggerUiOptions));
+app.get('/api-docs.json', (req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+  res.send(swaggerSpec);
+});
+app.get('/api/v1/docs.json', (req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+  res.send(swaggerSpec);
+});
 
 // Health check endpoint (supports GET, HEAD for uptime monitoring)
 app.all('/health', healthCheck);
