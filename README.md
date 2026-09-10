@@ -1,7 +1,7 @@
 <div align="center">
 
 # 🎓 PlaceX — Placement Operating System
-### Enterprise-Grade Campus Recruitment Automation & Career Intelligence Platform
+### Enterprise-Grade Campus Recruitment Automation and Career Intelligence Platform
 
 [![Build Status](https://img.shields.io/badge/Frontend_Build-Passing_(tsc_v6)-00C853?style=for-the-badge&logo=typescript&logoColor=white)](https://github.com/Nitinmall-1390/PlaceX)
 [![API Status](https://img.shields.io/badge/Backend_API-Live_on_Render-4C8DFF?style=for-the-badge&logo=render&logoColor=white)](https://placex-backend-3fmj.onrender.com/health)
