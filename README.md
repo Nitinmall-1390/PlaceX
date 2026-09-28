@@ -21,8 +21,27 @@
 
 ---
 
+<div align="center">
+
+## 🎬 Product Launch Video (1080p · 22s)
+
+<a href="https://github.com/Nitinmall-1390/PlaceX/blob/main/brag-output/brag.mp4">
+  <img src="brag-output/brag.jpg" alt="PlaceX Launch Video" width="100%" style="border-radius: 8px; border: 1px solid #262B38; box-shadow: 0 10px 30px rgba(0,0,0,0.5);" />
+</a>
+
+<p align="center">
+  ▶️ <strong><a href="https://github.com/Nitinmall-1390/PlaceX/blob/main/brag-output/brag.mp4">Click to Watch Launch Video on GitHub (1080p · 30fps · H.264 / AAC) »</a></strong>
+  &nbsp;•&nbsp;
+  🌐 <strong><a href="https://github.com/Nitinmall-1390/PlaceX/blob/main/brag-output/brag-animation.html">Interactive Animation Player »</a></strong>
+</p>
+
+</div>
+
+---
+
 ## 📌 Table of Contents
 
+- [Product Launch Video](#-product-launch-video-1080p--22s)
 - [Live Deployments & Cloud Endpoints](#-live-deployments--cloud-endpoints)
 - [Overview](#-overview)
 - [The Problem & The Solution](#-the-problem--the-solution)

@@ -1,0 +1,1339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>PlaceX Launch Video</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --void: #0A0C10;
+    --panel: #12151C;
+    --panel-raised: #171B24;
+    --line: #262B38;
+    --text: #E7EAF0;
+    --muted: #8B93A7;
+    --faint: #565E70;
+    --signal: #4C8DFF;
+    --signal-light: #7DB0FF;
+    --amber: #F2A93B;
+    --green: #34D399;
+    --red: #F0555A;
+    --font-display: 'Space Grotesk', sans-serif;
+    --font-sans: 'IBM Plex Sans', sans-serif;
+    --font-mono: 'IBM Plex Mono', monospace;
+  }
+
+  body {
+    background: var(--void);
+    color: var(--text);
+    font-family: var(--font-sans);
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    position: relative;
+    user-select: none;
+  }
+
+  /* Tactical grid */
+  .grid-bg {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(to right, rgba(76,141,255,0.07) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(76,141,255,0.07) 1px, transparent 1px);
+    background-size: 60px 60px;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* Corner brackets */
+  .bracket {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    border-color: var(--signal);
+    border-style: solid;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .bracket.tl { top: 0; left: 0; border-width: 3px 0 0 3px; }
+  .bracket.tr { top: 0; right: 0; border-width: 3px 3px 0 0; }
+  .bracket.bl { bottom: 0; left: 0; border-width: 0 0 3px 3px; }
+  .bracket.br { bottom: 0; right: 0; border-width: 0 3px 3px 0; }
+
+  /* Scene container */
+  .scene {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .scene.active { opacity: 1; pointer-events: all; }
+
+  /* Top brand pill */
+  .top-brand {
+    position: absolute;
+    top: 48px;
+    left: 80px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--muted);
+    letter-spacing: 0.15em;
+    opacity: 0;
+  }
+  .top-brand .dot {
+    width: 8px;
+    height: 8px;
+    background: var(--signal);
+    border-radius: 50%;
+    box-shadow: 0 0 12px var(--signal);
+  }
+
+  /* ---- SCENE 1: HOOK ---- */
+  #s1 { flex-direction: column; gap: 0; }
+  #s1 .hook-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+  #s1 .hook-line {
+    font-family: var(--font-mono);
+    font-size: 54px;
+    font-weight: 400;
+    color: var(--muted);
+    letter-spacing: -0.01em;
+    line-height: 1.35;
+    text-align: center;
+    overflow: hidden;
+  }
+  #s1 .hook-line span {
+    display: inline-block;
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  #s1 .hook-line.line2 {
+    font-size: 76px;
+    color: var(--text);
+    font-weight: 600;
+  }
+  #s1 .hook-cursor {
+    display: inline-block;
+    width: 4px;
+    height: 0.85em;
+    background: var(--signal);
+    margin-left: 8px;
+    vertical-align: bottom;
+    box-shadow: 0 0 10px var(--signal);
+  }
+
+  /* ---- SCENE 2: BRAND REVEAL ---- */
+  #s2 { flex-direction: column; align-items: center; gap: 28px; }
+  #s2 .logo-box {
+    position: relative;
+    padding: 60px 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+  }
+  #s2 .px-logo {
+    font-family: var(--font-display);
+    font-size: 240px;
+    font-weight: 800;
+    color: var(--signal);
+    letter-spacing: -0.05em;
+    line-height: 0.9;
+    text-shadow: 0 0 60px rgba(76,141,255,0.4);
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  #s2 .px-name {
+    font-family: var(--font-display);
+    font-size: 72px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.02em;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  #s2 .px-sub {
+    font-family: var(--font-mono);
+    font-size: 20px;
+    color: var(--muted);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    opacity: 0;
+  }
+  #s2 .bracket-wrap {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  /* ---- SCENE 3: READINESS INDEX ---- */
+  #s3 { flex-direction: column; align-items: center; gap: 48px; }
+  .ri-card {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 60px 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    position: relative;
+    min-width: 960px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  .ri-card .card-title {
+    font-family: var(--font-mono);
+    font-size: 15px;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+    text-transform: uppercase;
+    align-self: flex-start;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .ri-card .card-title::before {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background: var(--signal);
+    border-radius: 50%;
+  }
+  .ri-score-wrap {
+    display: flex;
+    align-items: center;
+    gap: 90px;
+  }
+  .ri-arc {
+    position: relative;
+    width: 240px;
+    height: 240px;
+  }
+  .ri-arc svg { position: absolute; inset: 0; }
+  .ri-arc .score-num {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .ri-arc .num {
+    font-family: var(--font-display);
+    font-size: 88px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1;
+  }
+  .ri-arc .denom {
+    font-family: var(--font-mono);
+    font-size: 18px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+  .ri-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    min-width: 440px;
+  }
+  .ri-bar-item { display: flex; flex-direction: column; gap: 8px; }
+  .ri-bar-label {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--muted);
+    display: flex;
+    justify-content: space-between;
+    letter-spacing: 0.08em;
+  }
+  .ri-bar-track {
+    height: 6px;
+    background: var(--line);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .ri-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--signal), var(--signal-light));
+    width: 0%;
+    border-radius: 2px;
+  }
+  .ri-badge {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--green);
+    border: 1px solid var(--green);
+    background: rgba(52,211,153,0.08);
+    padding: 8px 24px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    opacity: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    align-self: flex-start;
+    border-radius: 4px;
+  }
+  .ri-badge .pulse {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 10px var(--green);
+  }
+  .ri-subtitle {
+    font-family: var(--font-sans);
+    font-size: 32px;
+    color: var(--muted);
+    font-weight: 300;
+    opacity: 0;
+    letter-spacing: -0.01em;
+  }
+
+  /* ---- SCENE 4: ATS ---- */
+  #s4 { align-items: stretch; gap: 0; padding: 100px 180px; flex-direction: column; justify-content: center; }
+  .ats-wrap {
+    display: flex;
+    gap: 60px;
+    align-items: stretch;
+    width: 100%;
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  .resume-mock {
+    flex: 1;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 48px;
+    height: 640px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.5);
+  }
+  .resume-line {
+    height: 12px;
+    background: var(--line);
+    border-radius: 2px;
+    opacity: 0.6;
+  }
+  .resume-line.header { height: 28px; width: 55%; background: var(--faint); opacity: 0.8; }
+  .resume-line.section { height: 16px; width: 32%; background: var(--faint); margin-top: 20px; opacity: 0.7; }
+  .resume-line.short { width: 42%; }
+  .resume-line.med { width: 70%; }
+  .resume-line.long { width: 92%; }
+
+  .ats-panel {
+    flex: 1.1;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+  .ats-score-wrap {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    position: relative;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.5);
+  }
+  .ats-label {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--muted);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .ats-score-num {
+    font-family: var(--font-display);
+    font-size: 100px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1;
+  }
+  .ats-score-num span { font-size: 42px; color: var(--muted); font-weight: 400; }
+  .ats-keywords {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .kw {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    padding: 6px 14px;
+    border-radius: 4px;
+    border: 1px solid;
+    opacity: 0;
+  }
+  .kw.ok { color: var(--green); border-color: var(--green); background: rgba(52,211,153,0.08); }
+  .kw.miss { color: var(--red); border-color: var(--red); background: rgba(240,85,90,0.08); }
+
+  .ats-checklist {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 32px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.5);
+  }
+  .check-item {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--muted);
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    opacity: 0;
+  }
+  .check-item .check-box {
+    width: 16px;
+    height: 16px;
+    border: 1px solid var(--signal);
+    background: rgba(76,141,255,0.1);
+    border-radius: 2px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--signal);
+    font-size: 11px;
+  }
+  .ats-caption {
+    margin-top: 40px;
+    text-align: center;
+    font-family: var(--font-display);
+    font-size: 42px;
+    font-weight: 600;
+    color: var(--text);
+    opacity: 0;
+  }
+
+  /* ---- SCENE 5: CODING SANDBOX ---- */
+  #s5 { padding: 90px 160px; flex-direction: column; justify-content: center; }
+  .code-wrap {
+    display: flex;
+    gap: 40px;
+    width: 100%;
+    height: 680px;
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  .editor-pane {
+    flex: 1.35;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.5);
+  }
+  .editor-topbar {
+    background: var(--panel-raised);
+    border-bottom: 1px solid var(--line);
+    padding: 16px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  .editor-topbar .file-name {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .editor-topbar .file-name::before {
+    content: '';
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: var(--amber);
+    border-radius: 50%;
+  }
+  .timer-chip {
+    font-family: var(--font-mono);
+    font-size: 16px;
+    color: var(--amber);
+    border: 1px solid var(--amber);
+    background: rgba(242,169,59,0.08);
+    padding: 4px 18px;
+    border-radius: 4px;
+    letter-spacing: 0.1em;
+  }
+  .editor-body {
+    flex: 1;
+    padding: 32px;
+    font-family: var(--font-mono);
+    font-size: 16px;
+    color: var(--muted);
+    line-height: 1.8;
+  }
+  .editor-line { display: flex; gap: 24px; }
+  .editor-line .ln { color: var(--faint); user-select: none; min-width: 24px; text-align: right; }
+  .kw-def { color: #C792EA; }
+  .kw-fn { color: var(--signal-light); }
+  .kw-str { color: #C3E88D; }
+  .kw-num { color: var(--amber); }
+  .kw-cmt { color: var(--faint); }
+  .cursor-blink { display: inline-block; width: 2px; height: 1.1em; background: var(--signal); vertical-align: text-bottom; margin-left: 2px; box-shadow: 0 0 6px var(--signal); }
+
+  .test-pane {
+    flex: 1;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.5);
+  }
+  .test-topbar {
+    background: var(--panel-raised);
+    border-bottom: 1px solid var(--line);
+    padding: 16px 28px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--muted);
+    letter-spacing: 0.15em;
+  }
+  .test-body { flex: 1; padding: 32px; display: flex; flex-direction: column; gap: 20px; }
+  .test-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-family: var(--font-mono);
+    font-size: 15px;
+    color: var(--muted);
+    padding: 12px 18px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    opacity: 0;
+  }
+  .test-icon { width: 20px; height: 20px; flex-shrink: 0; }
+  .test-item.pass .test-label { color: var(--green); }
+  .test-item.pass { border-color: rgba(52,211,153,0.3); background: rgba(52,211,153,0.04); }
+  .test-item.run .test-label { color: var(--amber); }
+  .test-item.run { border-color: rgba(242,169,59,0.3); background: rgba(242,169,59,0.04); }
+
+  .code-caption {
+    margin-top: 36px;
+    text-align: center;
+    font-family: var(--font-display);
+    font-size: 42px;
+    font-weight: 600;
+    color: var(--text);
+    opacity: 0;
+  }
+
+  /* ---- SCENE 6: PIPELINE ---- */
+  #s6 { flex-direction: column; gap: 48px; padding: 100px 140px; justify-content: center; }
+  .pipeline-card {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 60px 70px;
+    width: 100%;
+    max-width: 1400px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  .pipe-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 24px;
+    font-family: var(--font-mono);
+  }
+  .pipe-header-title {
+    font-size: 15px;
+    letter-spacing: 0.18em;
+    color: var(--muted);
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .pipe-header-title::before {
+    content: '';
+    width: 8px; height: 8px;
+    background: var(--signal);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--signal);
+  }
+  .pipe-meta-chip {
+    font-size: 13px;
+    color: var(--signal);
+    background: rgba(76,141,255,0.08);
+    border: 1px solid rgba(76,141,255,0.3);
+    padding: 6px 16px;
+    border-radius: 4px;
+    letter-spacing: 0.08em;
+  }
+  .pipeline-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0;
+    width: 100%;
+  }
+  .pipe-stage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    opacity: 0;
+    min-width: 130px;
+  }
+  .pipe-dot {
+    width: 28px; height: 28px; border-radius: 50%;
+    border: 2px solid var(--line);
+    background: var(--panel-raised);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--faint);
+  }
+  .pipe-stage.lit .pipe-dot {
+    border-color: var(--signal);
+    background: var(--signal);
+    color: #fff;
+    box-shadow: 0 0 20px var(--signal);
+  }
+  .pipe-stage.offered .pipe-dot {
+    border-color: var(--green);
+    background: var(--green);
+    color: #000;
+    box-shadow: 0 0 24px var(--green);
+  }
+  .pipe-label {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--faint);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .pipe-sub {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .pipe-stage.lit .pipe-label { color: var(--text); font-weight: 500; }
+  .pipe-stage.offered .pipe-label { color: var(--green); font-weight: 600; }
+  .pipe-arrow {
+    flex: 1;
+    height: 2px; background: var(--line);
+    margin-bottom: 38px;
+    margin-left: 8px;
+    margin-right: 8px;
+  }
+  .pipe-arrow.lit {
+    background: linear-gradient(90deg, var(--signal), var(--signal-light));
+    box-shadow: 0 0 10px rgba(76,141,255,0.5);
+  }
+
+  .toast-notif {
+    background: var(--panel-raised);
+    border: 1px solid var(--green);
+    border-radius: 8px;
+    padding: 22px 34px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-family: var(--font-mono);
+    font-size: 16px;
+    color: var(--text);
+    position: fixed;
+    top: 70px; right: 80px;
+    opacity: 0;
+    transform: translateX(40px);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.7), 0 0 20px rgba(52,211,153,0.25);
+  }
+  .toast-notif.show { opacity: 1; transform: translateX(0); }
+  .toast-icon { font-size: 26px; }
+  .toast-text { display: flex; flex-direction: column; gap: 4px; }
+  .toast-title { color: var(--green); font-size: 15px; font-weight: 600; }
+  .toast-body { color: var(--muted); font-size: 13px; }
+
+  .pipe-caption {
+    font-family: var(--font-display);
+    font-size: 42px;
+    font-weight: 600;
+    color: var(--text);
+    text-align: center;
+    opacity: 0;
+  }
+
+  /* ---- SCENE 7: OUTRO ---- */
+  #s7 { flex-direction: column; align-items: center; gap: 24px; justify-content: center; }
+  #s7 .outro-logo {
+    font-family: var(--font-display);
+    font-size: 156px;
+    font-weight: 800;
+    color: var(--text);
+    letter-spacing: -0.04em;
+    opacity: 0;
+    transform: scale(0.9);
+    text-shadow: 0 0 50px rgba(76,141,255,0.3);
+  }
+  #s7 .outro-roles {
+    font-family: var(--font-mono);
+    font-size: 22px;
+    color: var(--muted);
+    letter-spacing: 0.16em;
+    opacity: 0;
+  }
+  #s7 .outro-url {
+    font-family: var(--font-mono);
+    font-size: 32px;
+    color: var(--signal);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    opacity: 0;
+    margin-top: 18px;
+    padding: 10px 28px;
+    border: 1px solid rgba(76,141,255,0.4);
+    background: rgba(76,141,255,0.06);
+    border-radius: 6px;
+    box-shadow: 0 0 30px rgba(76,141,255,0.2);
+  }
+</style>
+</head>
+<body>
+
+<div class="grid-bg" id="gridBg"></div>
+
+<div class="top-brand" id="topBrand">
+  <div class="dot"></div>
+  <span>PLACEX // PLATFORM INTEL</span>
+</div>
+
+<!-- SCENE 1: HOOK -->
+<div class="scene" id="s1">
+  <div class="hook-wrap">
+    <div class="hook-line" id="hook1"><span id="hookSpan1">campus placements.</span></div>
+    <div class="hook-line line2" id="hook2"><span id="hookSpan2">still running on excel?</span><span class="hook-cursor" id="hookCursor"></span></div>
+  </div>
+</div>
+
+<!-- SCENE 2: BRAND REVEAL -->
+<div class="scene" id="s2">
+  <div class="logo-box">
+    <div class="bracket tl" id="br-tl"></div>
+    <div class="bracket tr" id="br-tr"></div>
+    <div class="bracket bl" id="br-bl"></div>
+    <div class="bracket br" id="br-br"></div>
+    <div class="px-logo" id="pxLogo">PX</div>
+    <div class="px-name" id="pxName">PlaceX</div>
+    <div class="px-sub" id="pxSub">Placement Operating System</div>
+  </div>
+</div>
+
+<!-- SCENE 3: READINESS INDEX -->
+<div class="scene" id="s3">
+  <div class="ri-card" id="riCard">
+    <div class="card-title">PX Readiness Index · Real-Time Assessment</div>
+    <div class="ri-score-wrap">
+      <div class="ri-arc">
+        <svg viewBox="0 0 240 240" width="240" height="240">
+          <circle cx="120" cy="120" r="100" fill="none" stroke="#262B38" stroke-width="12"/>
+          <circle cx="120" cy="120" r="100" fill="none" stroke="#4C8DFF" stroke-width="12"
+            stroke-dasharray="628" stroke-dashoffset="628" stroke-linecap="round"
+            transform="rotate(-90 120 120)" id="arcFill"/>
+        </svg>
+        <div class="score-num">
+          <div class="num" id="riNum">0</div>
+          <div class="denom">/ 100</div>
+        </div>
+      </div>
+      <div class="ri-bars">
+        <div class="ri-bar-item">
+          <div class="ri-bar-label"><span>Profile Completeness</span><span>90%</span></div>
+          <div class="ri-bar-track"><div class="ri-bar-fill" id="bar1"></div></div>
+        </div>
+        <div class="ri-bar-item">
+          <div class="ri-bar-label"><span>Technical Assessment</span><span>82%</span></div>
+          <div class="ri-bar-track"><div class="ri-bar-fill" id="bar2"></div></div>
+        </div>
+        <div class="ri-bar-item">
+          <div class="ri-bar-label"><span>Project Portfolio</span><span>75%</span></div>
+          <div class="ri-bar-track"><div class="ri-bar-fill" id="bar3"></div></div>
+        </div>
+        <div class="ri-bar-item">
+          <div class="ri-bar-label"><span>Interview Readiness</span><span>70%</span></div>
+          <div class="ri-bar-track"><div class="ri-bar-fill" id="bar4"></div></div>
+        </div>
+        <div class="ri-bar-item">
+          <div class="ri-bar-label"><span>Academic Standing</span><span>85%</span></div>
+          <div class="ri-bar-track"><div class="ri-bar-fill" id="bar5"></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="ri-badge" id="riBadge">
+      <div class="pulse"></div>
+      PLACEMENT READY · TOP 10%
+    </div>
+  </div>
+  <div class="ri-subtitle" id="riSub">Live employability score. Know exactly where you stand.</div>
+</div>
+
+<!-- SCENE 4: ATS ANALYZER -->
+<div class="scene" id="s4">
+  <div class="ats-wrap" id="atsWrap">
+    <div class="resume-mock">
+      <div class="resume-line header"></div>
+      <div class="resume-line short" style="height:10px;margin-top:4px;width:35%"></div>
+      <div class="resume-line section"></div>
+      <div class="resume-line long"></div>
+      <div class="resume-line med"></div>
+      <div class="resume-line long"></div>
+      <div class="resume-line short"></div>
+      <div class="resume-line section"></div>
+      <div class="resume-line long"></div>
+      <div class="resume-line med"></div>
+      <div class="resume-line long"></div>
+      <div class="resume-line short"></div>
+      <div class="resume-line section"></div>
+      <div class="resume-line long"></div>
+      <div class="resume-line med"></div>
+      <div class="resume-line long"></div>
+    </div>
+    <div class="ats-panel">
+      <div class="ats-score-wrap">
+        <div class="ats-label">100-Point Deterministic ATS Score</div>
+        <div class="ats-score-num"><span id="atsNum">0</span><span>/100</span></div>
+        <div class="ats-keywords">
+          <div class="kw ok" id="kw1">✓ React</div>
+          <div class="kw ok" id="kw2">✓ Node.js</div>
+          <div class="kw ok" id="kw3">✓ TypeScript</div>
+          <div class="kw ok" id="kw4">✓ MongoDB</div>
+          <div class="kw miss" id="kw5">✗ Docker</div>
+          <div class="kw miss" id="kw6">✗ CI/CD</div>
+          <div class="kw miss" id="kw7">✗ AWS</div>
+        </div>
+      </div>
+      <div class="ats-checklist">
+        <div class="ats-label">Actionable Improvements</div>
+        <div class="check-item" id="ci1"><div class="check-box">✓</div>Quantify impact with numbers and % metrics</div>
+        <div class="check-item" id="ci2"><div class="check-box">✓</div>Add strong technical action verbs</div>
+        <div class="check-item" id="ci3"><div class="check-box">✓</div>Parse single-column ATS clean layout</div>
+      </div>
+    </div>
+  </div>
+  <div class="ats-caption" id="atsCaption">100-Point ATS. No black box.</div>
+</div>
+
+<!-- SCENE 5: CODING SANDBOX -->
+<div class="scene" id="s5">
+  <div class="code-wrap" id="codeWrap">
+    <div class="editor-pane">
+      <div class="editor-topbar">
+        <div class="file-name">solution.js</div>
+        <div style="display:flex;align-items:center;gap:16px">
+          <div style="font-family:var(--font-mono);font-size:13px;color:var(--muted)">Round 2 · Technical Assessment</div>
+          <div class="timer-chip" id="timerDisplay">14:33</div>
+        </div>
+      </div>
+      <div class="editor-body">
+        <div class="editor-line"><span class="ln">1</span><span><span class="kw-cmt">// Two Sum — find indices of target sum</span></span></div>
+        <div class="editor-line"><span class="ln">2</span><span></span></div>
+        <div class="editor-line"><span class="ln">3</span><span><span class="kw-def">function</span> <span class="kw-fn">twoSum</span>(nums, target) {</span></div>
+        <div class="editor-line"><span class="ln">4</span><span>&nbsp;&nbsp;<span class="kw-def">const</span> map = <span class="kw-def">new</span> <span class="kw-fn">Map</span>();</span></div>
+        <div class="editor-line"><span class="ln">5</span><span>&nbsp;&nbsp;<span class="kw-def">for</span> (<span class="kw-def">let</span> i = <span class="kw-num">0</span>; i &lt; nums.length; i++) {</span></div>
+        <div class="editor-line"><span class="ln">6</span><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw-def">const</span> comp = target - nums[i];</span></div>
+        <div class="editor-line"><span class="ln">7</span><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw-def">if</span> (map.has(comp)) {</span></div>
+        <div class="editor-line"><span class="ln">8</span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw-def">return</span> [map.get(comp), i];</span></div>
+        <div class="editor-line"><span class="ln">9</span><span>&nbsp;&nbsp;&nbsp;&nbsp;}</span></div>
+        <div class="editor-line"><span class="ln">10</span><span>&nbsp;&nbsp;&nbsp;&nbsp;map.<span class="kw-fn">set</span>(nums[i], i);<span class="cursor-blink"></span></span></div>
+        <div class="editor-line"><span class="ln">11</span><span>&nbsp;&nbsp;}</span></div>
+        <div class="editor-line"><span class="ln">12</span><span>}</span></div>
+      </div>
+    </div>
+    <div class="test-pane">
+      <div class="test-topbar">AUTOMATED TEST RUNNER</div>
+      <div class="test-body">
+        <div class="test-item pass" id="t1">
+          <svg class="test-icon" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          <span class="test-label">TEST 1 — PASSED</span>
+          <span style="margin-left:auto;color:var(--faint);font-size:13px">12ms</span>
+        </div>
+        <div class="test-item pass" id="t2">
+          <svg class="test-icon" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          <span class="test-label">TEST 2 — PASSED</span>
+          <span style="margin-left:auto;color:var(--faint);font-size:13px">8ms</span>
+        </div>
+        <div class="test-item run" id="t3">
+          <svg class="test-icon" viewBox="0 0 24 24" fill="none" stroke="#F2A93B" stroke-width="2.5" id="t3Icon"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/></svg>
+          <span class="test-label" id="t3Label">TEST 3 — RUNNING</span>
+          <span style="margin-left:auto;color:var(--faint);font-size:13px" id="t3Time">…</span>
+        </div>
+        <div class="test-item pass" id="t4">
+          <svg class="test-icon" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          <span class="test-label">TEST 4 — PASSED</span>
+          <span style="margin-left:auto;color:var(--faint);font-size:13px">6ms</span>
+        </div>
+        <div style="margin-top:auto;padding-top:24px;border-top:1px solid var(--line);display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:13px;color:var(--muted)">
+          <span>SANDBOX: Node.js VM · Isolated</span>
+          <span style="color:var(--signal);font-weight:600" id="sbStatus">STATUS: RUNNING</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="code-caption" id="codeCaption">Live coding rounds. Built-in.</div>
+</div>
+
+<!-- SCENE 6: PIPELINE -->
+<div class="scene" id="s6">
+  <div class="pipeline-card" id="pipeCard">
+    <div class="pipe-header">
+      <div class="pipe-header-title">Recruitment Pipeline Tracking · Real-Time Updates</div>
+      <div class="pipe-meta-chip">AUTOMATED SOCKET.IO ALERTS ACTIVE</div>
+    </div>
+    <div class="pipeline-wrap" id="pipeWrap">
+      <div class="pipe-stage" id="ps1">
+        <div class="pipe-dot">1</div>
+        <div class="pipe-label">Applied</div>
+        <div class="pipe-sub">1,420 Students</div>
+      </div>
+      <div class="pipe-arrow" id="pa1"></div>
+      <div class="pipe-stage" id="ps2">
+        <div class="pipe-dot">2</div>
+        <div class="pipe-label">Screening</div>
+        <div class="pipe-sub">ATS & Eligibility</div>
+      </div>
+      <div class="pipe-arrow" id="pa2"></div>
+      <div class="pipe-stage" id="ps3">
+        <div class="pipe-dot">3</div>
+        <div class="pipe-label">Shortlisted</div>
+        <div class="pipe-sub">Top 85 Candidates</div>
+      </div>
+      <div class="pipe-arrow" id="pa3"></div>
+      <div class="pipe-stage" id="ps4">
+        <div class="pipe-dot">4</div>
+        <div class="pipe-label">Interview</div>
+        <div class="pipe-sub">Sandbox & Technical</div>
+      </div>
+      <div class="pipe-arrow" id="pa4"></div>
+      <div class="pipe-stage offered" id="ps5">
+        <div class="pipe-dot">✓</div>
+        <div class="pipe-label">Offered</div>
+        <div class="pipe-sub">18 Offers Released</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-notif" id="toastNotif">
+    <div class="toast-icon">🔔</div>
+    <div class="toast-text">
+      <div class="toast-title">OFFER LETTER ISSUED</div>
+      <div class="toast-body">Software Engineer · Stripe · ₹28,00,000 CTC</div>
+    </div>
+  </div>
+
+  <div class="pipe-caption" id="pipeCaption">Full pipeline. Zero dropped balls.</div>
+</div>
+
+<!-- SCENE 7: OUTRO -->
+<div class="scene" id="s7">
+  <div class="outro-logo" id="outroLogo">PlaceX</div>
+  <div class="outro-roles" id="outroRoles">Students &nbsp;·&nbsp; Companies &nbsp;·&nbsp; TPO &nbsp;·&nbsp; Admin</div>
+  <div class="outro-url" id="outroUrl">placex.app</div>
+</div>
+
+<script>
+// ─── MATHEMATICAL UTILITIES ───
+function clamp(val, min, max) { return Math.max(min, Math.min(max, val)); }
+function lerp(a, b, t) { return a + (b - a) * clamp(t, 0, 1); }
+function easeOutQuad(t) { t = clamp(t, 0, 1); return t * (2 - t); }
+function easeOutCubic(t) { t = clamp(t, 0, 1); return 1 - Math.pow(1 - t, 3); }
+function easeInOutCubic(t) { t = clamp(t, 0, 1); return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
+function easeInCubic(t) { t = clamp(t, 0, 1); return t * t * t; }
+
+// ─── SCENE TIMINGS (in ms) ───
+const T = {
+  s1_start: 0,     s1_end: 2500,
+  s2_start: 2500,  s2_end: 5500,
+  s3_start: 5500,  s3_end: 9000,
+  s4_start: 9000,  s4_end: 13000,
+  s5_start: 13000, s5_end: 17000,
+  s6_start: 17000, s6_end: 20000,
+  s7_start: 20000, s7_end: 22000,
+  total: 22000
+};
+
+// ─── DETERMINISTIC FRAME RENDERER ───
+window.seekTo = function(t) {
+  t = clamp(t, 0, T.total);
+
+  // Grid background opacity
+  const gridEl = document.getElementById('gridBg');
+  if (t < T.s2_start) {
+    gridEl.style.opacity = '0';
+  } else if (t < T.s7_start) {
+    gridEl.style.opacity = '0.35';
+  } else {
+    const fade = 1 - easeOutCubic((t - T.s7_start) / 1000);
+    gridEl.style.opacity = String(0.35 * fade);
+  }
+
+  // Top brand indicator
+  const topBrandEl = document.getElementById('topBrand');
+  if (t >= T.s2_start + 400 && t < T.s7_start) {
+    const inT = easeOutCubic((t - (T.s2_start + 400)) / 400);
+    topBrandEl.style.opacity = String(inT);
+  } else {
+    topBrandEl.style.opacity = '0';
+  }
+
+  // Deactivate all scenes initially
+  const scenes = ['s1','s2','s3','s4','s5','s6','s7'];
+  let activeScene = 's1';
+  if (t < T.s1_end) activeScene = 's1';
+  else if (t < T.s2_end) activeScene = 's2';
+  else if (t < T.s3_end) activeScene = 's3';
+  else if (t < T.s4_end) activeScene = 's4';
+  else if (t < T.s5_end) activeScene = 's5';
+  else if (t < T.s6_end) activeScene = 's6';
+  else activeScene = 's7';
+
+  scenes.forEach(s => {
+    const el = document.getElementById(s);
+    if (s === activeScene) {
+      el.classList.add('active');
+    } else {
+      el.classList.remove('active');
+      el.style.opacity = '0';
+    }
+  });
+
+  const activeEl = document.getElementById(activeScene);
+
+  // ──────── SCENE 1: HOOK (0s - 2.5s) ────────
+  if (activeScene === 's1') {
+    let sceneAlpha = 1;
+    if (t > T.s1_end - 250) {
+      sceneAlpha = 1 - easeInCubic((t - (T.s1_end - 250)) / 250);
+    }
+    activeEl.style.opacity = String(sceneAlpha);
+
+    // hook line 1
+    const p1 = easeOutCubic((t - 150) / 450);
+    const span1 = document.getElementById('hookSpan1');
+    span1.style.opacity = String(p1);
+    span1.style.transform = `translateY(${lerp(100, 0, p1)}%)`;
+
+    // hook line 2
+    const p2 = easeOutCubic((t - 650) / 500);
+    const span2 = document.getElementById('hookSpan2');
+    span2.style.opacity = String(p2);
+    span2.style.transform = `translateY(${lerp(100, 0, p2)}%)`;
+
+    // cursor blink
+    const cursor = document.getElementById('hookCursor');
+    cursor.style.opacity = (Math.floor(t / 400) % 2 === 0) ? '1' : '0.1';
+  }
+
+  // ──────── SCENE 2: BRAND REVEAL (2.5s - 5.5s) ────────
+  if (activeScene === 's2') {
+    const s2T = t - T.s2_start;
+    let sceneAlpha = 1;
+    if (t > T.s2_end - 300) {
+      sceneAlpha = 1 - easeInCubic((t - (T.s2_end - 300)) / 300);
+    }
+    activeEl.style.opacity = String(sceneAlpha);
+
+    // PX Monogram
+    const logoP = easeOutCubic(s2T / 500);
+    const logo = document.getElementById('pxLogo');
+    logo.style.opacity = String(logoP);
+    logo.style.transform = `scale(${lerp(0.75, 1.0, logoP)})`;
+
+    // Brackets
+    const brP = easeOutCubic((s2T - 200) / 450);
+    ['br-tl','br-tr','br-bl','br-br'].forEach(id => {
+      const el = document.getElementById(id);
+      el.style.opacity = String(brP);
+    });
+
+    // PlaceX Name
+    const nameP = easeOutCubic((s2T - 400) / 450);
+    const nameEl = document.getElementById('pxName');
+    nameEl.style.opacity = String(nameP);
+    nameEl.style.transform = `translateY(${lerp(25, 0, nameP)}px)`;
+
+    // Subtitle
+    const subP = easeOutCubic((s2T - 700) / 400);
+    const subEl = document.getElementById('pxSub');
+    subEl.style.opacity = String(subP);
+  }
+
+  // ──────── SCENE 3: READINESS INDEX (5.5s - 9.0s) ────────
+  if (activeScene === 's3') {
+    const s3T = t - T.s3_start;
+    let sceneAlpha = 1;
+    if (t > T.s3_end - 300) {
+      sceneAlpha = 1 - easeInCubic((t - (T.s3_end - 300)) / 300);
+    }
+    activeEl.style.opacity = String(sceneAlpha);
+
+    // Card slide in
+    const cardP = easeOutCubic(s3T / 450);
+    const card = document.getElementById('riCard');
+    card.style.opacity = String(cardP);
+    card.style.transform = `translateY(${lerp(40, 0, cardP)}px)`;
+
+    // Score counter + Arc (animate from 200ms to 2000ms)
+    const arcP = easeOutCubic((s3T - 250) / 1600);
+    const scoreVal = Math.round(lerp(0, 78, arcP));
+    document.getElementById('riNum').textContent = String(scoreVal);
+
+    // Arc strokeDashoffset
+    const currentOffset = 628 - (628 * 0.78 * arcP);
+    document.getElementById('arcFill').style.strokeDashoffset = String(currentOffset);
+
+    // Dimension bars
+    const barTargets = [90, 82, 75, 70, 85];
+    barTargets.forEach((tgt, idx) => {
+      const bP = easeOutCubic((s3T - (350 + idx * 120)) / 900);
+      document.getElementById('bar' + (idx + 1)).style.width = `${tgt * bP}%`;
+    });
+
+    // Badge
+    const badgeP = easeOutCubic((s3T - 1800) / 350);
+    document.getElementById('riBadge').style.opacity = String(badgeP);
+
+    // Subtitle
+    const subP = easeOutCubic((s3T - 2100) / 400);
+    document.getElementById('riSub').style.opacity = String(subP);
+  }
+
+  // ──────── SCENE 4: ATS (9.0s - 13.0s) ────────
+  if (activeScene === 's4') {
+    const s4T = t - T.s4_start;
+    let sceneAlpha = 1;
+    if (t > T.s4_end - 300) {
+      sceneAlpha = 1 - easeInCubic((t - (T.s4_end - 300)) / 300);
+    }
+    activeEl.style.opacity = String(sceneAlpha);
+
+    // Wrap slide in
+    const wrapP = easeOutCubic(s4T / 450);
+    const wrap = document.getElementById('atsWrap');
+    wrap.style.opacity = String(wrapP);
+    wrap.style.transform = `translateY(${lerp(30, 0, wrapP)}px)`;
+
+    // ATS Score counter
+    const scoreP = easeOutCubic((s4T - 200) / 1200);
+    const atsScore = Math.round(lerp(0, 84, scoreP));
+    document.getElementById('atsNum').textContent = String(atsScore);
+
+    // Keywords pop in
+    for (let k = 1; k <= 7; k++) {
+      const kwP = easeOutCubic((s4T - (300 + (k - 1) * 110)) / 250);
+      document.getElementById('kw' + k).style.opacity = String(kwP);
+    }
+
+    // Checklist
+    for (let c = 1; c <= 3; c++) {
+      const ciP = easeOutCubic((s4T - (1200 + (c - 1) * 200)) / 300);
+      document.getElementById('ci' + c).style.opacity = String(ciP);
+    }
+
+    // Caption
+    const capP = easeOutCubic((s4T - 2000) / 400);
+    document.getElementById('atsCaption').style.opacity = String(capP);
+  }
+
+  // ──────── SCENE 5: CODING SANDBOX (13.0s - 17.0s) ────────
+  if (activeScene === 's5') {
+    const s5T = t - T.s5_start;
+    let sceneAlpha = 1;
+    if (t > T.s5_end - 300) {
+      sceneAlpha = 1 - easeInCubic((t - (T.s5_end - 300)) / 300);
+    }
+    activeEl.style.opacity = String(sceneAlpha);
+
+    // Wrap slide in
+    const wrapP = easeOutCubic(s5T / 450);
+    const wrap = document.getElementById('codeWrap');
+    wrap.style.opacity = String(wrapP);
+    wrap.style.transform = `translateY(${lerp(30, 0, wrapP)}px)`;
+
+    // Countdown timer: 14:33 counting down
+    const elapsedSec = Math.floor(s5T / 1000);
+    const remSec = Math.max(0, 873 - elapsedSec);
+    const mins = Math.floor(remSec / 60);
+    const secs = remSec % 60;
+    document.getElementById('timerDisplay').textContent = `${mins}:${String(secs).padStart(2,'0')}`;
+
+    // Test 1 & 2
+    const t1P = easeOutCubic((s5T - 200) / 250);
+    document.getElementById('t1').style.opacity = String(t1P);
+    const t2P = easeOutCubic((s5T - 500) / 250);
+    document.getElementById('t2').style.opacity = String(t2P);
+
+    // Test 3
+    const t3P = easeOutCubic((s5T - 800) / 250);
+    const t3El = document.getElementById('t3');
+    t3El.style.opacity = String(t3P);
+
+    // Test 3 flips to PASS at 1800ms
+    if (s5T >= 1800) {
+      t3El.classList.remove('run');
+      t3El.classList.add('pass');
+      document.getElementById('t3Label').textContent = 'TEST 3 — PASSED';
+      document.getElementById('t3Time').textContent = '4ms';
+      document.getElementById('t3Icon').setAttribute('stroke', '#34D399');
+      document.getElementById('t3Icon').innerHTML = '<polyline points="20 6 9 17 4 12"/>';
+    } else {
+      t3El.classList.remove('pass');
+      t3El.classList.add('run');
+      document.getElementById('t3Label').textContent = 'TEST 3 — RUNNING';
+      document.getElementById('t3Time').textContent = '…';
+      document.getElementById('t3Icon').setAttribute('stroke', '#F2A93B');
+      document.getElementById('t3Icon').innerHTML = '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/>';
+    }
+
+    // Test 4
+    const t4P = easeOutCubic((s5T - 2100) / 250);
+    document.getElementById('t4').style.opacity = String(t4P);
+
+    // Sandbox status footer
+    const sbStatus = document.getElementById('sbStatus');
+    if (s5T >= 2200) {
+      sbStatus.textContent = 'ALL 4 TESTS PASSED';
+      sbStatus.style.color = 'var(--green)';
+    } else {
+      sbStatus.textContent = 'STATUS: RUNNING';
+      sbStatus.style.color = 'var(--signal)';
+    }
+
+    // Caption
+    const capP = easeOutCubic((s5T - 2400) / 400);
+    document.getElementById('codeCaption').style.opacity = String(capP);
+  }
+
+  // ──────── SCENE 6: PIPELINE (17.0s - 20.0s) ────────
+  if (activeScene === 's6') {
+    const s6T = t - T.s6_start;
+    let sceneAlpha = 1;
+    if (t > T.s6_end - 300) {
+      sceneAlpha = 1 - easeInCubic((t - (T.s6_end - 300)) / 300);
+    }
+    activeEl.style.opacity = String(sceneAlpha);
+
+    const pipeCard = document.getElementById('pipeCard');
+    const cardP = easeOutCubic(s6T / 400);
+    pipeCard.style.opacity = String(cardP);
+    pipeCard.style.transform = `translateY(${lerp(30, 0, cardP)}px)`;
+
+    // Sequence stages & arrows
+    const stageDelays = [80, 260, 440, 620, 800];
+    const arrowDelays = [170, 350, 530, 710];
+
+    stageDelays.forEach((delay, idx) => {
+      const sEl = document.getElementById('ps' + (idx + 1));
+      if (s6T >= delay) {
+        sEl.style.opacity = '1';
+        sEl.classList.add('lit');
+      } else {
+        sEl.style.opacity = '0';
+        sEl.classList.remove('lit');
+      }
+    });
+
+    arrowDelays.forEach((delay, idx) => {
+      const aEl = document.getElementById('pa' + (idx + 1));
+      if (s6T >= delay) {
+        aEl.classList.add('lit');
+      } else {
+        aEl.classList.remove('lit');
+      }
+    });
+
+    // Toast notification
+    const toast = document.getElementById('toastNotif');
+    if (s6T >= 1050) {
+      const tP = easeOutCubic((s6T - 1050) / 350);
+      toast.style.opacity = String(tP);
+      toast.style.transform = `translateX(${lerp(40, 0, tP)}px)`;
+    } else {
+      toast.style.opacity = '0';
+      toast.style.transform = 'translateX(40px)';
+    }
+
+    // Caption
+    const capP = easeOutCubic((s6T - 950) / 350);
+    document.getElementById('pipeCaption').style.opacity = String(capP);
+  }
+
+  // ──────── SCENE 7: OUTRO (20.0s - 22.0s) ────────
+  if (activeScene === 's7') {
+    const s7T = t - T.s7_start;
+    activeEl.style.opacity = '1';
+
+    // Outro logo
+    const lP = easeOutCubic(s7T / 450);
+    const logoEl = document.getElementById('outroLogo');
+    logoEl.style.opacity = String(lP);
+    logoEl.style.transform = `scale(${lerp(0.85, 1.0, lP)})`;
+
+    // Roles
+    const rP = easeOutCubic((s7T - 300) / 400);
+    document.getElementById('outroRoles').style.opacity = String(rP);
+
+    // URL
+    const uP = easeOutCubic((s7T - 600) / 400);
+    document.getElementById('outroUrl').style.opacity = String(uP);
+  }
+};
+
+// ─── BROWSER AUTOPLAY LOOP (when viewed directly in a browser) ───
+let animStart = null;
+function browserPlayLoop(timestamp) {
+  if (!animStart) animStart = timestamp;
+  const elapsed = (timestamp - animStart) % (T.total + 1000);
+  window.seekTo(Math.min(elapsed, T.total));
+  requestAnimationFrame(browserPlayLoop);
+}
+
+document.fonts.ready.then(() => {
+  window.seekTo(0);
+  if (!window.isHeadlessCapture) {
+    requestAnimationFrame(browserPlayLoop);
+  }
+});
+</script>
+</body>
+</html>
